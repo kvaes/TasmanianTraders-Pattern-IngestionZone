@@ -5,7 +5,7 @@ resource "azurerm_resource_group" "storagelandingzone" {
 
 resource "azurerm_storage_account" "storagelandingzone" {
   count                    = "${var.storage_landingzone_count}"
-  name                     = "${var.prefix_workload}${var.prefix_environment}${count.index}"
+  name                     = "${var.prefix_workload}${var.prefix_environment}${var.storage_landingzone_prefix}${count.index}"
   resource_group_name      = "${azurerm_resource_group.storagelandingzone.name}"
   location                 = "${azurerm_resource_group.storagelandingzone.location}"
   account_tier             = "${var.storage_landingzone_tier}"
@@ -19,7 +19,7 @@ resource "azurerm_resource_group" "storageprocessingarea" {
 
 resource "azurerm_storage_account" "storageprocessingarea" {
   count                    = "${var.storage_processingarea_count}"
-  name                     = "${var.prefix_workload}${var.prefix_environment}${count.index}"
+  name                     = "${var.prefix_workload}${var.prefix_environment}${var.storage_processingarea_prefix}${count.index}"
   resource_group_name      = "${azurerm_resource_group.storageprocessingarea.name}"
   location                 = "${azurerm_resource_group.storageprocessingarea.location}"
   account_tier             = "${var.storage_processingarea_tier}"

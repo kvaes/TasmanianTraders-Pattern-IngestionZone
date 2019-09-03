@@ -5,10 +5,12 @@ variable "region_primary" {}
 variable "region_secondary" {}
 
 variable "storage_landingzone_identifier" {}
+variable "storage_landingzone_prefix" {}
 variable "storage_landingzone_tier" {}
 variable "storage_landingzone_resiliency" {}
 
 variable "storage_processingarea_identifier" {}
+variable "storage_processingarea_prefix" {}
 variable "storage_processingarea_tier" {}
 variable "storage_processingarea_resiliency" {}
 

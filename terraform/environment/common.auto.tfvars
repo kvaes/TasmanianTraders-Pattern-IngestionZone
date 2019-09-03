@@ -4,9 +4,11 @@ region_primary = "westeurope"
 region_secondary = "northeurope"
 
 storage_landingzone_identifier = "landingzone"
+storage_landingzone_prefix = "lz"
 storage_landingzone_tier = "standard"
 storage_landingzone_resiliency = "lrs"
 storage_processingarea_identifier = "processingarea"
+storage_processingarea_prefix = "pa"
 storage_processingarea_tier = "standard"
 storage_processingarea_resiliency = "lrs"
 
