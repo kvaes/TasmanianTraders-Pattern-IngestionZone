@@ -17,6 +17,18 @@ variable "storage_processingarea_resiliency" {}
 variable "storage_landingzone_count" {}
 variable "storage_processingarea_count" {}
 
+variable "adf_identifier" {}
+
+variable "batch_identifier" {}
+variable "storage_batch_tier" {}
+variable "storage_batch_resiliency" {}
+variable "batch_rosbag_identifier" {}
+variable "batch_rosbag_vm_size" {}
+variable "batch_rosbag_vm_sku" {}
+variable "batch_rosbag_nodes_dedicated" {}
+variable "batch_rosbag_nodes_lowpriority" {}
+
+
 variable "keyvault_identifier" {}
 variable "keyvault_sku" {}
 

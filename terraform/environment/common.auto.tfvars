@@ -12,6 +12,17 @@ storage_processingarea_prefix = "pa"
 storage_processingarea_tier = "standard"
 storage_processingarea_resiliency = "lrs"
 
+adf_identifier = "adf"
+
+batch_identifier = "batch"
+storage_batch_tier = "standard"
+storage_batch_resiliency = "lrs"
+batch_rosbag_identifier = "rosbag"
+batch_rosbag_vm_size = "standard_l8s"
+batch_rosbag_vm_sku = "batch.node.ubuntu 16.04"
+batch_rosbag_nodes_dedicated = 0
+batch_rosbag_nodes_lowpriority = 1 
+
 keyvault_identifier = "keyvault"
 keyvault_sku = "standard"
 
