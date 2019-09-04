@@ -9,10 +9,10 @@ resource "azurerm_data_factory" "azuredatafactory" {
   resource_group_name = "${azurerm_resource_group.azuredatafactory.name}"
 
   github_configuration {
-    account_name = "kvaes"
-    branch_name = "master"
-    git_url = "https://github.com/kvaes/TasmanianTraders-Pattern-ADF_Batch_Storage"
-    repository_name = "TasmanianTraders-Pattern-ADF_Batch_Storage"
-    root_folder = "/"
+    account_name      = "${var.adf_account_name}"
+    branch_name       = "${var.adf_branch_name}"
+    git_url           = "${var.adf_git_url}"
+    repository_name   = "${var.adf_repository_name}"
+    root_folder       = "${var.adf_root_folder}"
   }
 }

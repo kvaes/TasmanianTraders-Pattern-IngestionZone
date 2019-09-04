@@ -13,6 +13,10 @@ storage_processingarea_tier = "standard"
 storage_processingarea_resiliency = "lrs"
 
 adf_identifier = "adf"
+adf_account_name = "kvaes"
+adf_git_url = "https://github.com/kvaes/TasmanianTraders-Pattern-IngestionZone"
+adf_repository_name = "TasmanianTraders-Pattern-IngestionZone"
+adf_root_folder = "/adf/"
 
 batch_identifier = "batch"
 storage_batch_tier = "standard"

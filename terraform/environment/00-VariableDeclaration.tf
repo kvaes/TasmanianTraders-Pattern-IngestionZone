@@ -18,6 +18,11 @@ variable "storage_landingzone_count" {}
 variable "storage_processingarea_count" {}
 
 variable "adf_identifier" {}
+variable "adf_branch_name" {}
+variable "adf_account_name" {}
+variable "adf_git_url" {}
+variable "adf_repository_name" {}
+variable "adf_root_folder" {}
 
 variable "batch_identifier" {}
 variable "storage_batch_tier" {}

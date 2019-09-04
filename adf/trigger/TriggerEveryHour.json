@@ -1,0 +1,23 @@
+{
+	"name": "TriggerEveryHour",
+	"properties": {
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "00-GenerateIngestWorkload",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 1,
+				"startTime": "2019-06-17T12:30:00.000Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

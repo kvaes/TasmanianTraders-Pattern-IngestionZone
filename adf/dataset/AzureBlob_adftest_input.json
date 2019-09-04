@@ -1,0 +1,22 @@
+{
+	"name": "AzureBlob_adftest_input",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_kvaesadftest",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"InputFolder": {
+				"type": "string",
+				"defaultValue": "input"
+			}
+		},
+		"type": "AzureBlob",
+		"typeProperties": {
+			"folderPath": {
+				"value": "@dataset().InputFolder",
+				"type": "Expression"
+			}
+		}
+	}
+}

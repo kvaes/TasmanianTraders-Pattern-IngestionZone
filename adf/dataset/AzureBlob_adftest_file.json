@@ -1,0 +1,30 @@
+{
+	"name": "AzureBlob_adftest_file",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage_kvaesadftest",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"InputFolder": {
+				"type": "string",
+				"defaultValue": "samples"
+			},
+			"InputFile": {
+				"type": "string",
+				"defaultValue": "sample.done"
+			}
+		},
+		"type": "AzureBlob",
+		"typeProperties": {
+			"fileName": {
+				"value": "@dataset().InputFile",
+				"type": "Expression"
+			},
+			"folderPath": {
+				"value": "@dataset().InputFolder",
+				"type": "Expression"
+			}
+		}
+	}
+}

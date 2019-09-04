@@ -1,0 +1,221 @@
+{
+	"name": "00-GenerateIngestWorkload",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Files from Sample Workload",
+				"type": "GetMetadata",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "AzureBlob_adftest_input",
+						"type": "DatasetReference",
+						"parameters": {
+							"InputFolder": {
+								"value": "@variables('VarStorageSamplesContainer')",
+								"type": "Expression"
+							}
+						}
+					},
+					"fieldList": [
+						"childItems"
+					]
+				}
+			},
+			{
+				"name": "Set Workload Name",
+				"type": "SetVariable",
+				"typeProperties": {
+					"variableName": "VarWorkloadGuid",
+					"value": {
+						"value": "@guid()",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "FilterItems",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Get Files from Sample Workload",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Set Workload Name",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Files from Sample Workload').output.childitems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@and(\nequals(item().type, 'File'),\nequals(item().type, 'File')\n)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Copy Sample Workload",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "FilterItems",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('FilterItems').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy Sample File",
+							"type": "Copy",
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"typeProperties": {
+								"source": {
+									"type": "BlobSource",
+									"recursive": true
+								},
+								"sink": {
+									"type": "BlobSink"
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "AzureBlob_adftest_file",
+									"type": "DatasetReference",
+									"parameters": {
+										"InputFolder": {
+											"value": "@variables('VarStorageSamplesContainer')",
+											"type": "Expression"
+										},
+										"InputFile": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AzureBlob_adftest_file",
+									"type": "DatasetReference",
+									"parameters": {
+										"InputFolder": {
+											"value": "@variables('VarStorageStagingContainer')",
+											"type": "Expression"
+										},
+										"InputFile": {
+											"value": "@concat(variables('VarWorkloadGuid'),'-',item().name)",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "Copy Barrier File with extension done",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Copy Sample Workload",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "BlobSink"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "AzureBlob_adftest_file",
+						"type": "DatasetReference",
+						"parameters": {
+							"InputFolder": {
+								"value": "@variables('VarStorageSamplesContainer')",
+								"type": "Expression"
+							},
+							"InputFile": "sample.done"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureBlob_adftest_file",
+						"type": "DatasetReference",
+						"parameters": {
+							"InputFolder": {
+								"value": "@variables('VarStorageStagingContainer')",
+								"type": "Expression"
+							},
+							"InputFile": {
+								"value": "@concat(variables('VarWorkloadGuid'),'.done')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"variables": {
+			"VarStorageStagingContainer": {
+				"type": "String",
+				"defaultValue": "input"
+			},
+			"VarStorageProcessedContainer": {
+				"type": "String",
+				"defaultValue": "processed"
+			},
+			"VarStorageSamplesContainer": {
+				"type": "String",
+				"defaultValue": "samples"
+			},
+			"VarWorkloadGuid": {
+				"type": "String",
+				"defaultValue": "noguidgenerated"
+			}
+		}
+	}
+}
